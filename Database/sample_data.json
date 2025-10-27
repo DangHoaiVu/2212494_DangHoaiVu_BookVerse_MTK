@@ -1,0 +1,101 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "title": "Đắc Nhân Tâm",
+      "author": "Dale Carnegie",
+      "category": "Self-help",
+      "cover": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=300",
+      "description": "Cuốn sách kinh điển về nghệ thuật giao tiếp và ứng xử",
+      "createdAt": 1703123456789
+    },
+    {
+      "id": 2,
+      "title": "Tôi Tài Giỏi, Bạn Cũng Thế",
+      "author": "Adam Khoo",
+      "category": "Self-help",
+      "cover": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=300",
+      "description": "Phương pháp học tập hiệu quả và phát triển tư duy",
+      "createdAt": 1703123456790
+    },
+    {
+      "id": 3,
+      "title": "Nhà Giả Kim",
+      "author": "Paulo Coelho",
+      "category": "Fiction",
+      "cover": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300",
+      "description": "Câu chuyện về hành trình tìm kiếm kho báu và ý nghĩa cuộc sống",
+      "createdAt": 1703123456791
+    },
+    {
+      "id": 4,
+      "title": "Clean Code",
+      "author": "Robert C. Martin",
+      "category": "Programming",
+      "cover": "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300",
+      "description": "Nghệ thuật viết code sạch và dễ bảo trì",
+      "createdAt": 1703123456792
+    },
+    {
+      "id": 5,
+      "title": "JavaScript: The Good Parts",
+      "author": "Douglas Crockford",
+      "category": "Programming",
+      "cover": "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=300",
+      "description": "Khám phá những phần tốt nhất của JavaScript",
+      "createdAt": 1703123456793
+    },
+    {
+      "id": 6,
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "category": "Fiction",
+      "cover": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=300",
+      "description": "Tiểu thuyết kinh điển về công lý và lòng nhân ái",
+      "createdAt": 1703123456794
+    },
+    {
+      "id": 7,
+      "title": "1984",
+      "author": "George Orwell",
+      "category": "Fiction",
+      "cover": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300",
+      "description": "Tác phẩm dystopian nổi tiếng về xã hội tương lai",
+      "createdAt": 1703123456795
+    },
+    {
+      "id": 8,
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "category": "Fiction",
+      "cover": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=300",
+      "description": "Tiểu thuyết về giấc mơ Mỹ và sự phù phiếm",
+      "createdAt": 1703123456796
+    },
+    {
+      "id": 9,
+      "title": "Atomic Habits",
+      "author": "James Clear",
+      "category": "Self-help",
+      "cover": "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=300",
+      "description": "Xây dựng thói quen tốt và phá vỡ thói quen xấu",
+      "createdAt": 1703123456797
+    },
+    {
+      "id": 10,
+      "title": "Sapiens",
+      "author": "Yuval Noah Harari",
+      "category": "History",
+      "cover": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=300",
+      "description": "Lịch sử loài người từ thời tiền sử đến hiện tại",
+      "createdAt": 1703123456798
+    }
+  ],
+  "metadata": {
+    "version": "1.0.0",
+    "created_at": "2024-01-01T00:00:00Z",
+    "total_books": 10,
+    "categories": ["Self-help", "Fiction", "Programming", "History"],
+    "description": "Dữ liệu mẫu cho ứng dụng BookVerse"
+  }
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookVerse - Chạy Ứng Dụng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #A1C4FD 0%, #C2E9FB 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 15px 30px;
+            border-radius: 10px;
+            color: #333;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        .instructions {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 BookVerse</h1>
+        <p>Ứng dụng quản lý thư viện sách với thiết kế glassmorphism</p>
+        
+        <div class="instructions">
+            <h3>Hướng dẫn chạy ứng dụng:</h3>
+            <ol>
+                <li>Nhấn nút "Chạy Ứng Dụng" bên dưới</li>
+                <li>Hoặc mở file <code>Source/dist/index.html</code> trực tiếp</li>
+                <li>Ứng dụng sẽ chạy trên trình duyệt web</li>
+            </ol>
+        </div>
+        
+        <a href="../Source/dist/index.html" class="btn">🚀 Chạy Ứng Dụng</a>
+        
+        <div style="margin-top: 30px; font-size: 14px; color: #666;">
+            <p><strong>Tác giả:</strong> Đặng Hoài Vũ (2212494)</p>
+            <p><strong>Đề tài:</strong> BookVerse - Quản lý thư viện sách</p>
+            <p><strong>Công nghệ:</strong> Vanilla JavaScript, Vite, CSS3</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "bookverse-root",
+  "version": "1.0.0",
+  "description": "BookVerse Project Root",
+  "scripts": {
+    "dev": "cd Source && npm run dev",
+    "build": "cd Source && npm run build",
+    "preview": "cd Source && npm run preview",
+    "install": "cd Source && npm install"
+  },
+  "keywords": ["bookverse", "redirect"],
+  "author": "BookVerse Team",
+  "license": "MIT"
+}
+
+
+
+
+

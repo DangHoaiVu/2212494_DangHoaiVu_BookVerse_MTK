@@ -1,0 +1,149 @@
+PROJECT: 2212494_DangHoaiVu_BookVerse_MTK
+REPO: https://github.com/DangHoaiVu/2212494_DangHoaiVu_BookVerse_MTK
+DESCRIPTION: Ứng dụng web quản lý thư viện sách BookVerse được phát triển bằng Vanilla JavaScript và Vite. Ứng dụng hỗ trợ các chức năng CRUD, tìm kiếm, lọc theo thể loại, thống kê bằng Chart.js, lưu trữ dữ liệu bằng LocalStorage, giao diện thiết kế theo phong cách Glassmorphism và hỗ trợ chế độ Dark/Light mode.
+LICENSE: MIT
+
+# 1) YÊU CẦU MÔI TRƯỜNG
+- Node.js: phiên bản 18 trở lên  
+- npm: phiên bản 9 trở lên  
+- Git: phiên bản 2.40 trở lên
+
+# 2) CẤU HÌNH DỰ ÁN BAN ĐẦU
+git init
+git branch -M main
+git remote add origin https://github.com/DangHoaiVu/2212494_DangHoaiVu_BookVerse_MTK.git
+git add .
+git commit -m "initial: khởi tạo dự án BookVerse"
+git push -u origin main
+
+# 3) CẬP NHẬT VÀ NỘP DỰ ÁN (TRƯỜNG HỢP LÀM CÁ NHÂN)
+git add .
+git commit -m "final: nộp đồ án BookVerse hoàn chỉnh"
+git push origin main
+
+# 4) CHẠY VÀ BIÊN DỊCH DỰ ÁN
+cd Source
+npm install
+npm run dev     # Chạy ứng dụng ở chế độ phát triển (http://localhost:3000)
+npm run build   # Biên dịch sản phẩm vào thư mục Source/dist
+npm run preview # Xem thử bản build
+
+# 5) TRIỂN KHAI LÊN GITHUB PAGES
+## Phương án 1: Tự động qua GitHub Actions
+- Tạo file .github/workflows/pages.yml (theo mẫu ở cuối file này)
+- Vào Settings → Pages → Source: GitHub Actions
+- Mỗi lần push lên nhánh main, hệ thống sẽ tự động build và triển khai
+
+## Phương án 2: Thủ công
+cd Source
+npm run build
+git subtree push --prefix Source/dist origin gh-pages
+# Sau đó vào Settings → Pages → Branch: gh-pages
+
+# 6) CẤU HÌNH VITE CHO GITHUB PAGES
+File: Source/vite.config.js
+
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  base: '/2212494_DangHoaiVu_BookVerse_MTK/',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    sourcemap: false,
+    rollupOptions: {
+      output: { manualChunks: undefined }
+    }
+  },
+  resolve: {
+    alias: { '@': '/src' }
+  }
+})
+
+# 7) THÔNG TIN TÁC GIẢ VÀ LIÊN HỆ
+Tác giả: Đặng Hoài Vũ  
+MSSV: 2212494  
+Email: 2212494@dlu.edu.vn  
+Lớp: CTK46PM – Đại học Đà Lạt  
+
+# 8) CẤU TRÚC THƯ MỤC DỰ ÁN
+/ (root)
+  ├─ Database/           # Cơ sở dữ liệu mẫu
+  │  ├─ backup.sql
+  │  ├─ sample_data.json
+  │  └─ schema.sql
+  ├─ Source/             # Mã nguồn chính
+  │  ├─ src/
+  │  │  ├─ components/   # Các thành phần giao diện
+  │  │  ├─ patterns/     # Các mẫu thiết kế (MVC, Factory, Observer, Singleton)
+  │  │  ├─ styles/       # Tệp CSS giao diện
+  │  │  └─ utils/        # Các hàm tiện ích
+  │  ├─ dist/            # Sản phẩm build
+  │  ├─ index.html
+  │  ├─ package.json
+  │  └─ vite.config.js
+  ├─ Thực thi/           # Tệp chạy nhanh
+  │  └─ run.html
+  ├─ package.json        # Package gốc
+  └─ GitHub_Info.txt     # Tệp thông tin dự án này
+
+# 9) KHẮC PHỤC SỰ CỐ THƯỜNG GẶP
+- Lỗi push: kiểm tra quyền truy cập repository hoặc cấu hình remote URL  
+- Lỗi build: xóa node_modules + package-lock.json → npm install lại  
+- Lỗi GitHub Pages không hiển thị: kiểm tra trạng thái Actions và cấu hình Pages  
+- Lỗi chạy dev: đảm bảo đang ở đúng thư mục Source khi chạy lệnh
+
+# 10) MẪU WORKFLOW CHO GITHUB ACTIONS
+File: .github/workflows/pages.yml
+
+name: Deploy BookVerse to GitHub Pages
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: 
+          node-version: 20
+      - run: cd Source && npm ci
+      - run: cd Source && npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with: 
+          path: ./Source/dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+# 11) CHỨC NĂNG CHÍNH CỦA ỨNG DỤNG BOOKVERSE
+- Quản lý sách (Thêm, Sửa, Xóa, Xem chi tiết)  
+- Tìm kiếm và lọc theo thể loại  
+- Thống kê dữ liệu bằng biểu đồ Chart.js  
+- Lưu trữ thông tin trên LocalStorage  
+- Thiết kế giao diện Glassmorphism hiện đại  
+- Chế độ Dark/Light mode tự động ghi nhớ  
+- Giao diện đáp ứng (Responsive) cho máy tính và di động  
+- Hỗ trợ Accessibility: ARIA labels và điều hướng bàn phím  
+- Xuất/Nhập dữ liệu dưới dạng JSON  
+- Áp dụng các mẫu thiết kế: MVC, Factory, Observer, Singleton
+
+# 12) CÔNG NGHỆ SỬ DỤNG
+- Ngôn ngữ lập trình: JavaScript (ES6+)  
+- Công cụ build: Vite 5.x  
+- Thư viện biểu đồ: Chart.js 4.x  
+- Giao diện: CSS3 với hiệu ứng Glassmorphism  
+- Lưu trữ: LocalStorage API  
+- Kiến trúc phần mềm: MVC  
+- Thiết kế: Responsive và hỗ trợ Accessibility theo chuẩn WCAG AA

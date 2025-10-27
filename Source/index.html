@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookVerse - Quản Lý Thư Viện Sách</title>
+    <!-- Open Graph -->
+    <meta property="og:title" content="BookVerse - Quản Lý Thư Viện Sách">
+    <meta property="og:description" content="Thư viện mini để thêm, sửa, tìm kiếm và thống kê sách với hiệu ứng glassmorphism đẹp mắt.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="./assets/og-cover.png">
+    <meta property="og:url" content="/">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BookVerse - Quản Lý Thư Viện Sách">
+    <meta name="twitter:description" content="Thư viện mini để thêm, sửa, tìm kiếm và thống kê sách.">
+    <meta name="twitter:image" content="./assets/og-cover.png">
+    <link rel="icon" href="./favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/styles/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header glass" role="banner">
+            <div class="container">
+                <h1 class="logo" aria-label="BookVerse - Quản lý thư viện sách">📚 BookVerse</h1>
+                <nav class="header-nav" role="navigation" aria-label="Công cụ chính">
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" id="exportBtn" aria-label="Xuất dữ liệu sách ra file JSON">
+                            <span aria-hidden="true">📤</span> Xuất JSON
+                        </button>
+                        <label class="btn btn-secondary" for="importInput" style="cursor:pointer;" aria-label="Nhập dữ liệu sách từ file JSON">
+                            <span aria-hidden="true">📥</span> Nhập JSON
+                        </label>
+                        <input id="importInput" type="file" accept="application/json" style="display:none" aria-label="Chọn file JSON để nhập dữ liệu" />
+                        <button class="btn btn-primary" id="addBookBtn" aria-label="Thêm sách mới vào thư viện">
+                            <span aria-hidden="true">+</span> Thêm Sách
+                        </button>
+                        <!-- Dark Mode Toggle Button -->
+                        <button class="btn btn-secondary glass-btn" id="btn-theme-toggle" aria-pressed="false" aria-label="Chuyển đổi chế độ sáng/tối" title="Chuyển đổi chế độ sáng/tối (Ctrl+D)">
+                            <span aria-hidden="true">🌙</span>
+                        </button>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main" id="main-content">
+            <div class="container">
+                <!-- Stats Section -->
+                <section class="stats-section" aria-labelledby="stats-heading">
+                    <h2 id="stats-heading" class="sr-only">Thống kê thư viện</h2>
+                    <div class="stats-grid" role="group" aria-label="Thống kê số liệu">
+                        <div class="stat-card glass" role="article" aria-labelledby="total-books-label">
+                            <div class="stat-icon" aria-hidden="true">📖</div>
+                            <div class="stat-content">
+                                <h3 id="totalBooks" class="stat-number" aria-live="polite">0</h3>
+                                <p id="total-books-label">Tổng Sách</p>
+                            </div>
+                        </div>
+                        <div class="stat-card glass" role="article" aria-labelledby="total-categories-label">
+                            <div class="stat-icon" aria-hidden="true">🏷️</div>
+                            <div class="stat-content">
+                                <h3 id="totalCategories" class="stat-number" aria-live="polite">0</h3>
+                                <p id="total-categories-label">Thể Loại</p>
+                            </div>
+                        </div>
+                        <div class="stat-card glass" role="article" aria-labelledby="popular-category-label">
+                            <div class="stat-icon" aria-hidden="true">⭐</div>
+                            <div class="stat-content">
+                                <h3 id="popularCategory" class="stat-number" aria-live="polite">-</h3>
+                                <p id="popular-category-label">Thể Loại Phổ Biến</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chart Container -->
+                    <div class="chart-container glass" role="img" aria-labelledby="chart-title" aria-describedby="chart-description">
+                        <h3 id="chart-title">Thống Kê Thể Loại</h3>
+                        <p id="chart-description" class="sr-only">Biểu đồ tròn hiển thị phân bố số lượng sách theo từng thể loại</p>
+                        <canvas id="categoryChart" width="400" height="200" aria-label="Biểu đồ thống kê thể loại sách"></canvas>
+                    </div>
+                </section>
+
+                <!-- Search and Filter -->
+                <section class="controls-section" aria-labelledby="search-heading">
+                    <h2 id="search-heading" class="sr-only">Tìm kiếm và lọc sách</h2>
+                    <div class="controls-grid">
+                        <div class="search-container glass">
+                            <label for="searchInput" class="sr-only">Tìm kiếm sách</label>
+                            <input type="text" id="searchInput" placeholder="Tìm kiếm sách..." class="search-input" aria-describedby="search-help">
+                            <span class="search-icon" aria-hidden="true">🔍</span>
+                            <div id="search-help" class="sr-only">Nhập tên sách, tác giả hoặc thể loại để tìm kiếm</div>
+                        </div>
+                        <label for="categoryFilter" class="sr-only">Lọc theo thể loại</label>
+                        <select id="categoryFilter" class="filter-select glass" aria-label="Chọn thể loại để lọc">
+                            <option value="">Tất cả thể loại</option>
+                        </select>
+                    </div>
+                </section>
+
+                <!-- Books Grid -->
+                <section class="books-section" aria-labelledby="books-heading">
+                    <h2 id="books-heading" class="sr-only">Danh sách sách</h2>
+                    <div id="booksContainer" class="books-grid" role="grid" aria-label="Danh sách sách trong thư viện">
+                        <!-- Books will be rendered here -->
+                    </div>
+                    <div id="emptyState" class="empty-state glass" role="status" aria-live="polite">
+                        <div class="empty-icon" aria-hidden="true">📚</div>
+                        <h3>Chưa có sách nào</h3>
+                        <p>Hãy thêm sách đầu tiên để bắt đầu quản lý thư viện của bạn!</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for Add/Edit Book -->
+    <div id="bookModal" class="modal-overlay" role="dialog" aria-labelledby="modalTitle" aria-modal="true" aria-hidden="true">
+        <div class="modal glass">
+            <div class="modal-header">
+                <h2 id="modalTitle">Thêm Sách Mới</h2>
+                <button class="modal-close" id="modalClose" aria-label="Đóng modal">&times;</button>
+            </div>
+            <form id="bookForm" class="modal-body" novalidate>
+                <div class="form-group">
+                    <label for="bookTitle">Tiêu đề sách *</label>
+                    <input type="text" id="bookTitle" required aria-describedby="title-error" aria-invalid="false">
+                    <div id="title-error" class="error-message" role="alert" aria-live="polite"></div>
+                </div>
+                <div class="form-group">
+                    <label for="bookAuthor">Tác giả *</label>
+                    <input type="text" id="bookAuthor" required aria-describedby="author-error" aria-invalid="false">
+                    <div id="author-error" class="error-message" role="alert" aria-live="polite"></div>
+                </div>
+                <div class="form-group">
+                    <label for="bookCategory">Thể loại *</label>
+                    <input type="text" id="bookCategory" required placeholder="Ví dụ: Tiểu thuyết, Khoa học, Lịch sử..." aria-describedby="category-error" aria-invalid="false">
+                    <div id="category-error" class="error-message" role="alert" aria-live="polite"></div>
+                </div>
+                <div class="form-group">
+                    <label for="bookCover">URL ảnh bìa</label>
+                    <input type="url" id="bookCover" placeholder="https://example.com/book-cover.jpg" aria-describedby="cover-help">
+                    <div id="cover-help" class="help-text">
+                        Nhập URL hợp lệ để hiển thị ảnh bìa<br>
+                        <strong>Lưu ý:</strong> Click chuột phải vào ảnh → "Copy image address" (không phải link tìm kiếm)
+                    </div>
+                    <div class="sample-urls" style="margin-top: 8px; font-size: 12px; color: #64748b;">
+                        <strong>URL mẫu để test:</strong><br>
+                        <button type="button" onclick="document.getElementById('bookCover').value='https://images-na.ssl-images-amazon.com/images/I/51ZSpMl1-LL._SX342_SY445_.jpg'" style="background:none;border:none;color:#3b82f6;text-decoration:underline;cursor:pointer;padding:0;margin-right:8px;">Sách 1</button>
+                        <button type="button" onclick="document.getElementById('bookCover').value='https://images-na.ssl-images-amazon.com/images/I/41xShlnTZTL._SX342_SY445_.jpg'" style="background:none;border:none;color:#3b82f6;text-decoration:underline;cursor:pointer;padding:0;margin-right:8px;">Sách 2</button>
+                        <button type="button" onclick="document.getElementById('bookCover').value='https://images-na.ssl-images-amazon.com/images/I/51W1lB+4olL._SX342_SY445_.jpg'" style="background:none;border:none;color:#3b82f6;text-decoration:underline;cursor:pointer;padding:0;">Sách 3</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="bookDescription">Mô tả</label>
+                    <textarea id="bookDescription" rows="4" placeholder="Mô tả ngắn về nội dung sách..." aria-describedby="description-help"></textarea>
+                    <div id="description-help" class="help-text">Mô tả ngắn gọn về nội dung sách (tùy chọn)</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modalCancel">Hủy</button>
+                    <button type="submit" class="btn btn-primary" id="modalSave">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast glass" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+    <!-- Skip to main content link for screen readers -->
+    <a href="#main-content" class="skip-link">Bỏ qua đến nội dung chính</a>
+
+    <script type="module" src="./src/main.js"></script>
+</body>
+</html>
+
